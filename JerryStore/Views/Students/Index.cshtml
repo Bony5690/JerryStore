@@ -3,14 +3,35 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Student: @model.FirstName @model.LastName</h2>
+<h2>Student: @Model.FirstName @Model.LastName</h2>
 
-    <dl>
-        <dd>First Name:</dd>
-        <dd>@model.FirstName</dd>
-            <dd>Last Name:</dd>
-        <dd>LastName</dd>
-        <dd>@model.LastName</dd>
-            <dd>Date Of Birth:</dd>
-        <dd>@model.DateOfBirth</dd>
-    </dl>
+  @using (Html.BeginForm())
+  {
+    <fieldset>
+        <legend>
+            Student: @Model.FirstName @Model.LastName 
+        </legend>
+    
+        
+     <div class="form-group">
+         @Html.LabelFor(m => m.FirstName)
+         @Html.TextBoxFor(m => m.FirstName, new {@class= "form-control" })
+     </div>
+            
+        <div class="form-group">
+            @Html.LabelFor(m => m.LastName)
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.DateOfBirth)
+            @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control", type= "date" })
+        </div>
+
+        
+    </fieldset>
+    @Html.HiddenFor(m =>m.ID)
+
+    <input type="submit" class="btn btn-primary" name="name" value="save" />
+    
+  }
