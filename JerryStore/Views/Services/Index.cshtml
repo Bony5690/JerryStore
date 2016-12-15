@@ -3,14 +3,33 @@
     ViewBag.Title = "Service";
 }
 
-<h2>Services</h2>
+<h2>Pick a Package</h2>
+<form>
+    @*<dl>
+        <dd>Starter Package</dd>
+        <dd>@Model.Package </ dd >
+        <dd>Task</dd>
+        <dd>@Model.Task </dd>
+        <dd>Assistant</dd>
+        <dd>@Model.Assistant </dd>
+        <dd>@Model.Price </dd>
+    </dl>*@
 
-<dl>
-    <dd>Starter Package</dd>
-    <dd>@Model.Package </ dd >
-    <dd>Task</dd>
-    <dd>@Model.Task </ dd >
-    <dd>Assistant</dd>
-    <dd>@Model.Assistant </ dd >
-    <dd>@Model.Price </ dd >
-</dl>
+    @using (Html.BeginForm())
+    {
+        <fieldset>
+            <legend>
+                Package: @Model.Package
+            </legend>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Package)
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+            </div>
+            
+        </fieldset>
+        @Html.HiddenFor(m => m.ID)
+        <input type="submit" class="btn btn-primary" value="Add To Cart" />
+    }
+
+
+    

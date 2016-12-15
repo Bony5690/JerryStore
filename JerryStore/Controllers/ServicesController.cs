@@ -12,7 +12,7 @@ namespace JerryStore.Controllers
         // GET: Students/
         public ActionResult Index(int?ID)
         {
-            
+             
             if (ID == 1)
          {
                 return View(new Service { ID = 1, Package = "Starter", Task = "5", Assistant = "Random Assistant", Price = 19.95m });
@@ -25,9 +25,14 @@ namespace JerryStore.Controllers
 
             return HttpNotFound ("No service found");
         }
-        
-        
+        // POST: Students/Edit/{id}
+        [HttpPost]
+        public ActionResult Index(Service service)
+        {
+            return RedirectToAction("Index", "checkout");
+        }
 
-       
+
+
     }
 }
