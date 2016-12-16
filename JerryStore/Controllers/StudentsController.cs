@@ -23,7 +23,7 @@ namespace JerryStore.Controllers
 
            students.Add(new Student { ID = 4, FirstName = "Serk", LastName = "Bony" });
 
-           students.Add(new Student { ID = 5, FirstName = "Tessa", LastName = "Bony" });
+           students.Add(new Student { ID = 5, FirstName = "Tessa", LastName = "" });
             }
 
             if(id.HasValue && students.Any(x => x.ID == id.Value))
