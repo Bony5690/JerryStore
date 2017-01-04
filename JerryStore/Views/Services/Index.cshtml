@@ -1,10 +1,10 @@
-﻿@model JerryStore.Models.Service
+﻿@model JerryStore.Models.ServiceModel
 @{
     ViewBag.Title = "Service";
 }
 
 <h2>Pick a Package</h2>
-<form>
+
     @*<dl>
         <dd>Starter Package</dd>
         <dd>@Model.Package </ dd >
@@ -19,15 +19,15 @@
     {
         <fieldset>
             <legend>
-                Package: @Model.Package
+                Package: @Model.Name
             </legend>
             <div class="form-group">
-                @Html.LabelFor(m => m.Package)
+                @Html.LabelFor(m => m.Price)
                 @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
             </div>
             
         </fieldset>
-        @Html.HiddenFor(m => m.ID)
+        @Html.HiddenFor(m => m.id)
         <input type="submit" class="btn btn-primary" value="Add To Cart" />
     }
 
