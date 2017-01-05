@@ -12,19 +12,20 @@ namespace JerryStore.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Customer
+    public partial class CustomerPackage
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Customer()
+        public CustomerPackage()
         {
-            this.CustomerPackages = new HashSet<CustomerPackage>();
+            this.CustomerPackageTasks = new HashSet<CustomerPackageTask>();
         }
     
-        public int ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public int CustomerID { get; set; }
+        public int PackageID { get; set; }
     
+        public virtual Customer Customer { get; set; }
+        public virtual Package Package { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerPackage> CustomerPackages { get; set; }
+        public virtual ICollection<CustomerPackageTask> CustomerPackageTasks { get; set; }
     }
 }

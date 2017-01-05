@@ -5,6 +5,22 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="CustomersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustomerPackages">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="PackageID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="PackageID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerPackageTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="PackageID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Customers">
           <Key>
             <PropertyRef Name="ID" />
@@ -23,14 +39,104 @@
           <Property Name="Assistant" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Task" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_CustomerPackages_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="CustomerPackages" Type="Self.CustomerPackages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomerPackages">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerPackages_Packages">
+          <End Role="Packages" Type="Self.Packages" Multiplicity="1" />
+          <End Role="CustomerPackages" Type="Self.CustomerPackages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Packages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomerPackages">
+              <PropertyRef Name="PackageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerPackageTasks_CustomerPackages">
+          <End Role="CustomerPackages" Type="Self.CustomerPackages" Multiplicity="1" />
+          <End Role="CustomerPackageTasks" Type="Self.CustomerPackageTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerPackages">
+              <PropertyRef Name="CustomerID" />
+              <PropertyRef Name="PackageID" />
+            </Principal>
+            <Dependent Role="CustomerPackageTasks">
+              <PropertyRef Name="CustomerID" />
+              <PropertyRef Name="PackageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CustomersModelStoreContainer">
+          <EntitySet Name="CustomerPackages" EntityType="Self.CustomerPackages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerPackageTasks" EntityType="Self.CustomerPackageTasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Packages" EntityType="Self.Packages" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CustomerPackages_Customers" Association="Self.FK_CustomerPackages_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="CustomerPackages" EntitySet="CustomerPackages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerPackages_Packages" Association="Self.FK_CustomerPackages_Packages">
+            <End Role="Packages" EntitySet="Packages" />
+            <End Role="CustomerPackages" EntitySet="CustomerPackages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerPackageTasks_CustomerPackages" Association="Self.FK_CustomerPackageTasks_CustomerPackages">
+            <End Role="CustomerPackages" EntitySet="CustomerPackages" />
+            <End Role="CustomerPackageTasks" EntitySet="CustomerPackageTasks" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CustomersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CustomersEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomerPackages" EntityType="CustomersModel.CustomerPackage" />
+          <EntitySet Name="CustomerPackageTasks" EntityType="CustomersModel.CustomerPackageTask" />
+          <EntitySet Name="Customers" EntityType="CustomersModel.Customer" />
+          <EntitySet Name="Packages" EntityType="CustomersModel.Package" />
+          <AssociationSet Name="FK_CustomerPackages_Customers" Association="CustomersModel.FK_CustomerPackages_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerPackage" EntitySet="CustomerPackages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerPackages_Packages" Association="CustomersModel.FK_CustomerPackages_Packages">
+            <End Role="Package" EntitySet="Packages" />
+            <End Role="CustomerPackage" EntitySet="CustomerPackages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerPackageTasks_CustomerPackages" Association="CustomersModel.FK_CustomerPackageTasks_CustomerPackages">
+            <End Role="CustomerPackage" EntitySet="CustomerPackages" />
+            <End Role="CustomerPackageTask" EntitySet="CustomerPackageTasks" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CustomerPackage">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="PackageID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="PackageID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="CustomersModel.FK_CustomerPackages_Customers" FromRole="CustomerPackage" ToRole="Customer" />
+          <NavigationProperty Name="Package" Relationship="CustomersModel.FK_CustomerPackages_Packages" FromRole="CustomerPackage" ToRole="Package" />
+          <NavigationProperty Name="CustomerPackageTasks" Relationship="CustomersModel.FK_CustomerPackageTasks_CustomerPackages" FromRole="CustomerPackage" ToRole="CustomerPackageTask" />
+        </EntityType>
+        <EntityType Name="CustomerPackageTask">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="PackageID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CustomerPackage" Relationship="CustomersModel.FK_CustomerPackageTasks_CustomerPackages" FromRole="CustomerPackageTask" ToRole="CustomerPackage" />
+        </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="ID" />
@@ -38,11 +144,8 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomerPackages" Relationship="CustomersModel.FK_CustomerPackages_Customers" FromRole="Customer" ToRole="CustomerPackage" />
         </EntityType>
-        <EntityContainer Name="CustomersEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Customers" EntityType="Self.Customer" />
-          <EntitySet Name="Packages" EntityType="CustomersModel.Package" />
-        </EntityContainer>
         <EntityType Name="Package">
           <Key>
             <PropertyRef Name="ID" />
@@ -52,19 +155,75 @@
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Assistant" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Task" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CustomerPackages" Relationship="CustomersModel.FK_CustomerPackages_Packages" FromRole="Package" ToRole="CustomerPackage" />
         </EntityType>
-      </Schema>
+        <Association Name="FK_CustomerPackages_Customers">
+          <End Type="CustomersModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="CustomersModel.CustomerPackage" Role="CustomerPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomerPackage">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerPackages_Packages">
+          <End Type="CustomersModel.Package" Role="Package" Multiplicity="1" />
+          <End Type="CustomersModel.CustomerPackage" Role="CustomerPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomerPackage">
+              <PropertyRef Name="PackageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerPackageTasks_CustomerPackages">
+          <End Type="CustomersModel.CustomerPackage" Role="CustomerPackage" Multiplicity="1" />
+          <End Type="CustomersModel.CustomerPackageTask" Role="CustomerPackageTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerPackage">
+              <PropertyRef Name="CustomerID" />
+              <PropertyRef Name="PackageID" />
+            </Principal>
+            <Dependent Role="CustomerPackageTask">
+              <PropertyRef Name="CustomerID" />
+              <PropertyRef Name="PackageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CustomersModelStoreContainer" CdmEntityContainer="CustomersEntities">
+          <EntitySetMapping Name="CustomerPackages">
+            <EntityTypeMapping TypeName="CustomersModel.CustomerPackage">
+              <MappingFragment StoreEntitySet="CustomerPackages">
+                <ScalarProperty Name="PackageID" ColumnName="PackageID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerPackageTasks">
+            <EntityTypeMapping TypeName="CustomersModel.CustomerPackageTask">
+              <MappingFragment StoreEntitySet="CustomerPackageTasks">
+                <ScalarProperty Name="PackageID" ColumnName="PackageID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="CustomersModel.Customer">
               <MappingFragment StoreEntitySet="Customers">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -14,10 +14,19 @@ namespace JerryStore.Models
     
     public partial class Package
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Package()
+        {
+            this.CustomerPackages = new HashSet<CustomerPackage>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Assistant { get; set; }
         public int Task { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomerPackage> CustomerPackages { get; set; }
     }
 }

@@ -25,6 +25,8 @@ namespace JerryStore.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<CustomerPackage> CustomerPackages { get; set; }
+        public virtual DbSet<CustomerPackageTask> CustomerPackageTasks { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Package> Packages { get; set; }
     }

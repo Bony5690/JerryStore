@@ -133,10 +133,16 @@
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PackagesAdminController.cs" />
     <Compile Include="Controllers\PackagesController.cs" />
-    <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Models\Customer.cs">
+      <DependentUpon>Customers.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerPackage.cs">
+      <DependentUpon>Customers.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerPackageTask.cs">
       <DependentUpon>Customers.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Customers.Context.cs">
@@ -161,7 +167,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CheckoutModel.cs" />
-    <Compile Include="Models\ServiceModel.cs" />
+    <Compile Include="Models\PackageModel.cs" />
     <Compile Include="Views\Service.cs" />
     <Compile Include="Views\Checkout\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -219,13 +225,13 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
-    <Content Include="Views\Services\Index.cshtml" />
-    <Content Include="Views\Checkout\Index.cshtml" />
-    <Content Include="Views\Packages\Create.cshtml" />
-    <Content Include="Views\Packages\Delete.cshtml" />
-    <Content Include="Views\Packages\Details.cshtml" />
-    <Content Include="Views\Packages\Edit.cshtml" />
     <Content Include="Views\Packages\Index.cshtml" />
+    <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\PackagesAdmin\Create.cshtml" />
+    <Content Include="Views\PackagesAdmin\Delete.cshtml" />
+    <Content Include="Views\PackagesAdmin\Details.cshtml" />
+    <Content Include="Views\PackagesAdmin\Edit.cshtml" />
+    <Content Include="Views\PackagesAdmin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
