@@ -1,10 +1,15 @@
-﻿namespace JerryStore.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace JerryStore.Models
 {
     public class PackageModel
     {
-        public int id { get;  set; }
-        public string Name { get;  set; }
-        public decimal Price { get;  set; }
+        public int id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
         public string Assistant { get; set; }
         public int Task { get; set; }
     }
