@@ -1,37 +1,111 @@
-﻿  <!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Leave It To Us</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span style="color:blanchedalmond" class="glyphicon glyphicon glyphicon-cog" ></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+    <span id="switcher">
+        <header id="@ViewBag.HeaderId" class="@ViewBag.HeaderClass">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/"><span class="navbar-logo"></i>Leave It To Us</span></a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-left down">
+                        <li>@Html.ActionLink("About Us", "aboutus", "home", null, new { @class = "small-links" })</li>
+                        <li>@Html.ActionLink("Task Ideas", "taskideas", "home", null, new { @class = "small-links" })</li>
+                        <li>@Html.ActionLink("Plans and Pricing", "index", "packages", null, new { @class = "small-links" })</li>
+                        <li>@Html.ActionLink("Contact Us", "contact", "home", null, new { @class = "small-links" })</li>
+                    </ul>
+                    <!-- Right part of Navigation -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Sign In", "Login", "membership", null, new { @class = "btn" })</li>
+                        <li>
+                            @Html.ActionLink("Get Started", "index", "packages", null, new { @class = "btn btn-default back-color" })
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            @RenderSection("AdditionalHeader", false)
+            
+        </header>
+    </span>
+
+
+
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span style="color:blanchedalmond" class="glyphicon glyphicon glyphicon-cog" ></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Leave It To Us", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About Us", "About", "Home")</li>
+                        <li>@Html.ActionLink("Task Ideas", "About", "Home")</li>
+                        <li>@Html.ActionLink("Plans And Pricing", "Index", "Plans and Pricing")</li>
+                        <li>@Html.ActionLink("Contact Us", "Contact Us", "Home")</li>
+                    </ul>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+        </div>*@
+    <div class="body-content">
+        @RenderBody()
+    </div>
+    <hr />
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <h3 class="footer-title">Leave It To Us</h3>
+                    <p class="footer-paragraph">
+                        Copyright © 2016 <br> Leave It To Us LLC.
+                        All rights reserved.
+                    </p>
+                </div>
+
+                <div class="col-xs-12 col-md-4">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <p class="footer-paragraph">
+                        Leave It to Us LLC
+                        (872) 201-1289 <br>
+                        info@LeaveItToUs.com <br>
+                        Careers and Opportunities
+                    </p>
+                </div>
+
+                <div class="col-xs-12 col-md-4">
+                    <h3 class="footer-title">Navigation</h3>
+                    <nav>
+                        <ul class="horizontal">
+                            <li><a href="index.html" class="footer-paragraph">How It Work</a></li>
+                            <li><a href="courses.html" class="footer-paragraph">Plans And Pricing</a></li>
+                            <li><a href="students.html" class="footer-paragraph">About</a></li>
+                            <li><a href="Apply Now" class="footer-paragraph">Task Ideas</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

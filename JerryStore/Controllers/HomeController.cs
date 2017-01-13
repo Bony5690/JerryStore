@@ -10,21 +10,42 @@ namespace JerryStore.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.HeaderId = "image";
+            ViewBag.HeaderClass = "parallax";
             return View();
         }
-
-        public ActionResult About()
+        
+        
+        public ActionResult AboutUs()
         {
-            ViewBag.Message = "Your application description page.";
-
+            ViewBag.HeaderId = "other-color";
             return View();
         }
+
+
+
+        public ActionResult TaskIdeas()
+        {
+            ViewBag.HeaderId = "task-picture";
+            return View();
+        }
+
+
+        public ActionResult  PlansandPricing()
+        {
+            ViewBag.HeaderId = "Pricing";
+            return View();
+        }
+
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
+            ViewBag.HeaderId = "Pricing";
             return View();
         }
+
+        
+
+
     }
 }

@@ -15,6 +15,7 @@ namespace JerryStore.Controllers
             // GET: Login
             public ActionResult Login()
             {
+            //ViewBag header = "";
                 LoginModel model = new LoginModel();
                 return View(model);
             }
@@ -62,7 +63,7 @@ namespace JerryStore.Controllers
                     }
                     else
                     {
-                        string confirmationToken = WebSecurity.CreateUserAndAccount(model.EmailAddress, model.Password, null, true);
+                        string confirmationToken = WebSecurity.CreateUserAndAccount(model.EmailAddress, model.Password, new { FirstName = model.FirstName, LastName = model.LastName }, true);
                         string confirmationUrl = Request.Url.GetLeftPart(UriPartial.Authority) + "/Membership/Confirm?confirmationToken=" + confirmationToken;
 
                         string sendGridApiKey = ConfigurationManager.AppSettings["SendGrid.ApiKey"];

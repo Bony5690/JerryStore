@@ -40,5 +40,7 @@ namespace JerryStore.Models
             [Required]
             [Range(2000, 3000)]
             public int CreditCardExpirationYear { get; set; }
-        }
+        public string PackageName { get; set; }
+        public decimal PackagePrice { get; set; }
+    }
     }

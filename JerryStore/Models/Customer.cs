@@ -18,13 +18,17 @@ namespace JerryStore.Models
         public Customer()
         {
             this.CustomerPackages = new HashSet<CustomerPackage>();
+            this.webpages_Roles = new HashSet<webpages_Roles>();
         }
     
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string EmailAddress { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerPackage> CustomerPackages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
     }
 }

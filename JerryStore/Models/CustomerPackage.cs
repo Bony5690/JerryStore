@@ -22,10 +22,11 @@ namespace JerryStore.Models
     
         public int CustomerID { get; set; }
         public int PackageID { get; set; }
+        public Nullable<System.DateTime> PurchaseDate { get; set; }
     
-        public virtual Customer Customer { get; set; }
         public virtual Package Package { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerPackageTask> CustomerPackageTasks { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

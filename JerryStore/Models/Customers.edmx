@@ -12,6 +12,7 @@
           </Key>
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="PackageID" Type="int" Nullable="false" />
+          <Property Name="PurchaseDate" Type="datetime" />
         </EntityType>
         <EntityType Name="CustomerPackageTasks">
           <Key>
@@ -28,6 +29,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
           <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="EmailAddress" Type="nchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Packages">
           <Key>
@@ -38,6 +40,46 @@
           <Property Name="Price" Type="money" Nullable="false" />
           <Property Name="Assistant" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Task" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ConfirmationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsConfirmed" Type="bit" />
+          <Property Name="LastPasswordFailureDate" Type="datetime" />
+          <Property Name="PasswordFailuresSinceLastSuccess" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordChangedDate" Type="datetime" />
+          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordVerificationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="PasswordVerificationTokenExpirationDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="webpages_OAuthMembership">
+          <Key>
+            <PropertyRef Name="Provider" />
+            <PropertyRef Name="ProviderUserId" />
+          </Key>
+          <Property Name="Provider" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ProviderUserId" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_CustomerPackages_Customers">
           <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
@@ -77,11 +119,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_RoleId">
+          <End Role="webpages_Roles" Type="Self.webpages_Roles" Multiplicity="1" />
+          <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="webpages_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="webpages_UsersInRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserId">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="webpages_UsersInRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CustomersModelStoreContainer">
           <EntitySet Name="CustomerPackages" EntityType="Self.CustomerPackages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerPackageTasks" EntityType="Self.CustomerPackageTasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Packages" EntityType="Self.Packages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_Membership" EntityType="Self.webpages_Membership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CustomerPackages_Customers" Association="Self.FK_CustomerPackages_Customers">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="CustomerPackages" EntitySet="CustomerPackages" />
@@ -94,6 +164,14 @@
             <End Role="CustomerPackages" EntitySet="CustomerPackages" />
             <End Role="CustomerPackageTasks" EntitySet="CustomerPackageTasks" />
           </AssociationSet>
+          <AssociationSet Name="fk_RoleId" Association="Self.fk_RoleId">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserId" Association="Self.fk_UserId">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -102,12 +180,10 @@
         <EntityContainer Name="CustomersEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CustomerPackages" EntityType="CustomersModel.CustomerPackage" />
           <EntitySet Name="CustomerPackageTasks" EntityType="CustomersModel.CustomerPackageTask" />
-          <EntitySet Name="Customers" EntityType="CustomersModel.Customer" />
           <EntitySet Name="Packages" EntityType="CustomersModel.Package" />
-          <AssociationSet Name="FK_CustomerPackages_Customers" Association="CustomersModel.FK_CustomerPackages_Customers">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="CustomerPackage" EntitySet="CustomerPackages" />
-          </AssociationSet>
+          <EntitySet Name="webpages_Membership" EntityType="CustomersModel.webpages_Membership" />
+          <EntitySet Name="webpages_OAuthMembership" EntityType="CustomersModel.webpages_OAuthMembership" />
+          <EntitySet Name="webpages_Roles" EntityType="CustomersModel.webpages_Roles" />
           <AssociationSet Name="FK_CustomerPackages_Packages" Association="CustomersModel.FK_CustomerPackages_Packages">
             <End Role="Package" EntitySet="Packages" />
             <End Role="CustomerPackage" EntitySet="CustomerPackages" />
@@ -115,6 +191,15 @@
           <AssociationSet Name="FK_CustomerPackageTasks_CustomerPackages" Association="CustomersModel.FK_CustomerPackageTasks_CustomerPackages">
             <End Role="CustomerPackage" EntitySet="CustomerPackages" />
             <End Role="CustomerPackageTask" EntitySet="CustomerPackageTasks" />
+          </AssociationSet>
+          <EntitySet Name="Customers" EntityType="CustomersModel.Customer" />
+          <AssociationSet Name="FK_CustomerPackages_Customers" Association="CustomersModel.FK_CustomerPackages_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerPackage" EntitySet="CustomerPackages" />
+          </AssociationSet>
+          <AssociationSet Name="webpages_UsersInRoles" Association="CustomersModel.webpages_UsersInRoles">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="CustomerPackage">
@@ -124,9 +209,10 @@
           </Key>
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
           <Property Name="PackageID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="CustomersModel.FK_CustomerPackages_Customers" FromRole="CustomerPackage" ToRole="Customer" />
+          <Property Name="PurchaseDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Package" Relationship="CustomersModel.FK_CustomerPackages_Packages" FromRole="CustomerPackage" ToRole="Package" />
           <NavigationProperty Name="CustomerPackageTasks" Relationship="CustomersModel.FK_CustomerPackageTasks_CustomerPackages" FromRole="CustomerPackage" ToRole="CustomerPackageTask" />
+          <NavigationProperty Name="Customer" Relationship="CustomersModel.FK_CustomerPackages_Customers" FromRole="CustomerPackage" ToRole="Customer" />
         </EntityType>
         <EntityType Name="CustomerPackageTask">
           <Key>
@@ -136,15 +222,6 @@
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
           <Property Name="PackageID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CustomerPackage" Relationship="CustomersModel.FK_CustomerPackageTasks_CustomerPackages" FromRole="CustomerPackageTask" ToRole="CustomerPackage" />
-        </EntityType>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CustomerPackages" Relationship="CustomersModel.FK_CustomerPackages_Customers" FromRole="Customer" ToRole="CustomerPackage" />
         </EntityType>
         <EntityType Name="Package">
           <Key>
@@ -157,18 +234,39 @@
           <Property Name="Task" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CustomerPackages" Relationship="CustomersModel.FK_CustomerPackages_Packages" FromRole="Package" ToRole="CustomerPackage" />
         </EntityType>
-        <Association Name="FK_CustomerPackages_Customers">
-          <End Type="CustomersModel.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="CustomersModel.CustomerPackage" Role="CustomerPackage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CustomerPackage">
-              <PropertyRef Name="CustomerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ConfirmationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsConfirmed" Type="Boolean" />
+          <Property Name="LastPasswordFailureDate" Type="DateTime" Precision="3" />
+          <Property Name="PasswordFailuresSinceLastSuccess" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordChangedDate" Type="DateTime" Precision="3" />
+          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordVerificationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordVerificationTokenExpirationDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="webpages_OAuthMembership">
+          <Key>
+            <PropertyRef Name="Provider" />
+            <PropertyRef Name="ProviderUserId" />
+          </Key>
+          <Property Name="Provider" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderUserId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customers" Relationship="CustomersModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="Customer" />
+        </EntityType>
         <Association Name="FK_CustomerPackages_Packages">
           <End Type="CustomersModel.Package" Role="Package" Multiplicity="1" />
           <End Type="CustomersModel.CustomerPackage" Role="CustomerPackage" Multiplicity="*" />
@@ -195,6 +293,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="CustomerPackages" Relationship="CustomersModel.FK_CustomerPackages_Customers" FromRole="Customer" ToRole="CustomerPackage" />
+          <NavigationProperty Name="webpages_Roles" Relationship="CustomersModel.webpages_UsersInRoles" FromRole="Customer" ToRole="webpages_Roles" />
+        </EntityType>
+        <Association Name="FK_CustomerPackages_Customers">
+          <End Type="CustomersModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="CustomersModel.CustomerPackage" Role="CustomerPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomerPackage">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="webpages_UsersInRoles">
+          <End Type="CustomersModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
+          <End Type="CustomersModel.Customer" Role="Customer" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -204,6 +329,7 @@
           <EntitySetMapping Name="CustomerPackages">
             <EntityTypeMapping TypeName="CustomersModel.CustomerPackage">
               <MappingFragment StoreEntitySet="CustomerPackages">
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
                 <ScalarProperty Name="PackageID" ColumnName="PackageID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
               </MappingFragment>
@@ -218,15 +344,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="CustomersModel.Customer">
-              <MappingFragment StoreEntitySet="Customers">
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Packages">
             <EntityTypeMapping TypeName="CustomersModel.Package">
               <MappingFragment StoreEntitySet="Packages">
@@ -238,6 +355,58 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Membership">
+            <EntityTypeMapping TypeName="CustomersModel.webpages_Membership">
+              <MappingFragment StoreEntitySet="webpages_Membership">
+                <ScalarProperty Name="PasswordVerificationTokenExpirationDate" ColumnName="PasswordVerificationTokenExpirationDate" />
+                <ScalarProperty Name="PasswordVerificationToken" ColumnName="PasswordVerificationToken" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="PasswordChangedDate" ColumnName="PasswordChangedDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordFailuresSinceLastSuccess" ColumnName="PasswordFailuresSinceLastSuccess" />
+                <ScalarProperty Name="LastPasswordFailureDate" ColumnName="LastPasswordFailureDate" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_OAuthMembership">
+            <EntityTypeMapping TypeName="CustomersModel.webpages_OAuthMembership">
+              <MappingFragment StoreEntitySet="webpages_OAuthMembership">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
+                <ScalarProperty Name="Provider" ColumnName="Provider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Roles">
+            <EntityTypeMapping TypeName="CustomersModel.webpages_Roles">
+              <MappingFragment StoreEntitySet="webpages_Roles">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="CustomersModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="CustomersModel.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
+            <EndProperty Name="Customer">
+              <ScalarProperty Name="ID" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="webpages_Roles">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

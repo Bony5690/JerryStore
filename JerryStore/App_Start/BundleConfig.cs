@@ -25,6 +25,10 @@ namespace JerryStore
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      //"~/Content/bootstrap-theme.css",
+                      "~/Content/main.css",
+                      "~/Content/main2.css",
+                       "~/Content/https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
                       "~/Content/site.css"));
         }
     }

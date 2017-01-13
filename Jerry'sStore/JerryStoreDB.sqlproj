@@ -67,6 +67,10 @@
     <Build Include="dbo\Tables\Packages.sql" />
     <Build Include="dbo\Tables\CustomerPackages.sql" />
     <Build Include="dbo\Tables\CustomerTasks.sql" />
+    <Build Include="dbo\Tables\webpages_UsersInRoles.sql" />
+    <Build Include="dbo\Tables\webpages_Roles.sql" />
+    <Build Include="dbo\Tables\webpages_OAuthMembership.sql" />
+    <Build Include="dbo\Tables\webpages_Membership.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="JerryStoreDB.refactorlog" />

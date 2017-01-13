@@ -5,13 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="4c235662456448a282effca24e165e7b" Name="Diagram1">
-        <EntityTypeShape EntityType="CustomersModel.CustomerPackage" Width="2.75" PointX="3.625" PointY="1.75" />
-        <EntityTypeShape EntityType="CustomersModel.CustomerPackageTask" Width="2.75" PointX="6.875" PointY="1.625" />
-        <EntityTypeShape EntityType="CustomersModel.Customer" Width="2.75" PointX="0.75" PointY="5.125" />
-        <EntityTypeShape EntityType="CustomersModel.Package" Width="2.75" PointX="0.5" PointY="0.5" />
-        <AssociationConnector Association="CustomersModel.FK_CustomerPackages_Customers" />
+        <EntityTypeShape EntityType="CustomersModel.CustomerPackage" Width="1.5" PointX="5.25" PointY="0.875" />
+        <EntityTypeShape EntityType="CustomersModel.CustomerPackageTask" Width="1.5" PointX="7.5" PointY="1.125" />
+        <EntityTypeShape EntityType="CustomersModel.Package" Width="1.5" PointX="3" PointY="4.875" />
+        <EntityTypeShape EntityType="CustomersModel.webpages_Membership" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="CustomersModel.webpages_OAuthMembership" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="CustomersModel.webpages_Roles" Width="1.5" PointX="0.75" PointY="1.25" />
         <AssociationConnector Association="CustomersModel.FK_CustomerPackages_Packages" />
         <AssociationConnector Association="CustomersModel.FK_CustomerPackageTasks_CustomerPackages" />
+        <EntityTypeShape EntityType="CustomersModel.Customer" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="CustomersModel.FK_CustomerPackages_Customers" />
+        <AssociationConnector Association="CustomersModel.webpages_UsersInRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -22,6 +22,20 @@
     {
         @Html.AntiForgeryToken()
         <h2>Checkout</h2>
+        <div class="well">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>Package</td>
+                        <td>Price</td>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>@Model.PackageName</td>
+                    <td>@Model.PackagePrice</td>
+                </tr>
+            </table>
+        </div>
         if (!ViewData.ModelState.IsValid)
         {
             <div class="alert alert-danger">

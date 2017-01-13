@@ -10,6 +10,7 @@ using JerryStore.Models;
 
 namespace JerryStore.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class PackagesAdminController : Controller
     {
         private CustomersEntities db = new CustomersEntities();

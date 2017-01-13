@@ -13,8 +13,16 @@ namespace JerryStore.Controllers
         public ActionResult Index()
         {
             CheckoutModel model = new CheckoutModel();
-            
-            return View();
+
+            using (CustomersEntities entities = new CustomersEntities())
+            {
+                var currentPackage = entities.Customers.Single(x => x.EmailAddress == User.Identity.Name).CustomerPackages.First(x => x.PurchaseDate == null);
+                model.PackageName = currentPackage.Package.Name;
+                model.PackagePrice = currentPackage.Package.Price;
+                
+            }
+
+                return View(model);
         }
 
         [HttpPost]

@@ -27,7 +27,10 @@ namespace JerryStore.Models
     
         public virtual DbSet<CustomerPackage> CustomerPackages { get; set; }
         public virtual DbSet<CustomerPackageTask> CustomerPackageTasks { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Package> Packages { get; set; }
+        public virtual DbSet<webpages_Membership> webpages_Membership { get; set; }
+        public virtual DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
+        public virtual DbSet<webpages_Roles> webpages_Roles { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
     }
 }
