@@ -15,8 +15,8 @@ namespace JerryStore.Controllers
             // GET: Login
             public ActionResult Login()
             {
-            //ViewBag header = "";
-                LoginModel model = new LoginModel();
+            ViewBag.HeaderId = "back";
+            LoginModel model = new LoginModel();
                 return View(model);
             }
 
