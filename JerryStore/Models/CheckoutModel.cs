@@ -30,7 +30,7 @@ namespace JerryStore.Models
             public string CreditCardName { get; set; }
 
             [Required]
-            [RegularExpression("/^[0-9]{3,4}$/", ErrorMessage = "Your CVV Is Invalid!")]
+            //[RegularExpression("/^[0-9]{3,4}$/", ErrorMessage = "Your CVV Is Invalid!")]
             public string CreditCardVerificationValue { get; set; }
 
             [Required]
@@ -40,7 +40,7 @@ namespace JerryStore.Models
             [Required]
             [Range(2000, 3000)]
             public int CreditCardExpirationYear { get; set; }
-        public string PackageName { get; set; }
-        public decimal PackagePrice { get; set; }
+        
+         public PackageModel Package { get; set; }
     }
     }

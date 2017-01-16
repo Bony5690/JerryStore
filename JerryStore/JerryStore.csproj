@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\CartModel.cs" />
+    <Compile Include="Models\ReceiptModel.cs" />
     <Compile Include="Models\webpages_Membership.cs">
       <DependentUpon>Customers.tt</DependentUpon>
     </Compile>
@@ -350,6 +351,8 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Home\PlansandPricing.cshtml" />
     <Content Include="Views\Home\TaskIdeas.cshtml" />
+    <Content Include="Views\Membership\ConfirmationSent.cshtml" />
+    <Content Include="Views\Membership\Receipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

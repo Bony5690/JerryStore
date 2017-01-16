@@ -27,7 +27,9 @@ namespace JerryStore.Controllers
             {
                 
                 Customer customer = entities.Customers.FirstOrDefault(x => x.EmailAddress == User.Identity.Name);
-                
+
+                customer.CustomerPackages.Remove(customer.CustomerPackages.First());
+
                 customer.CustomerPackages.Add(new CustomerPackage { PackageID = model.id });
 
                 entities.SaveChanges();

@@ -29,10 +29,18 @@
                     </ul>
                     <!-- Right part of Navigation -->
                     <ul class="nav navbar-nav navbar-right">
+                        @if(@User.Identity.IsAuthenticated) 
+                        {
+                           <li>@Html.ActionLink(string.Format("Sign Out", User.Identity.Name), "Logout", "membership", null, new { @class = "btn" })</li> 
+                        }
+                        else
+                        {
                         <li>@Html.ActionLink("Sign In", "Login", "membership", null, new { @class = "btn" })</li>
                         <li>
                             @Html.ActionLink("Get Started", "index", "packages", null, new { @class = "btn btn-default back-color" })
                         </li>
+
+                        }
                     </ul>
                 </div>
             </nav>

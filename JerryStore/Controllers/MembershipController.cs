@@ -2,6 +2,7 @@
 using SendGrid.Helpers.Mail;
 using System;
 using System.Configuration;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using WebMatrix.WebData;
@@ -94,7 +95,32 @@ namespace JerryStore.Controllers
                 return View(model);
             }
 
-            [HttpPost]
+        // GET: Receipt
+        public ActionResult Receipt()
+        {
+            using (Models.CustomersEntities entities = new Models.CustomersEntities())
+            { 
+                ReceiptModel model = new ReceiptModel();
+                var currentCustomer = entities.Customers.Single(x => x.EmailAddress == User.Identity.Name);
+                var currentPackage = currentCustomer.CustomerPackages.First(x => x.PurchaseDate != null);
+
+               
+                model.FirstName = currentPackage.Package.Name;
+                model.Price = currentPackage.Package.Price;
+                model.Assistant = currentPackage.Package.Assistant;
+                model.Task = currentPackage.Package.Task;
+                model.FirstName = currentCustomer.FirstName;
+                model.LastName = currentCustomer.LastName;
+                model.EmailAddress = currentCustomer.EmailAddress.Trim();
+               
+                return View(model);
+            }   
+           
+        }
+
+
+
+        [HttpPost]
             public async Task<ActionResult> ForgotPassword(Models.ForgotPasswordModel model)
             {
                 if (WebSecurity.UserExists(model.EmailAddress))

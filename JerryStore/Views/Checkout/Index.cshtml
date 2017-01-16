@@ -31,8 +31,9 @@
                     </tr>
                 </thead>
                 <tr>
-                    <td>@Model.PackageName</td>
-                    <td>@Model.PackagePrice</td>
+                    <td>@Html.DisplayFor(m => m.Package.Name)</td>
+                    
+                    <td>@Html.DisplayFor(m => m.Package.Price)</td>
                 </tr>
             </table>
         </div>
