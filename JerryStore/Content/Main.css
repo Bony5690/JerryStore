@@ -1,7 +1,9 @@
-﻿body{
+﻿body  html{
   font-family: Tahoma,"Helvetica Neue",Helvetica,Arial,sans-serif;
-  line-height:1.5625!important
-  /*color: #777;*/
+  line-height:1.5625!important;
+  margin: 0!important;
+  padding: 0!important;
+ 
 }
 
  h3{
@@ -13,7 +15,9 @@ h3.footer-title{
   color: white;
 }
 
-
+div.height{
+    height: 265px;
+}
 
 p{
   color: #777;
@@ -300,7 +304,9 @@ header{
   }
 }
 
-
+h2.smaller-size{
+    font-size: 35px;
+  }
 
 
 /* break point earlier for hamburger drop down menu*/
@@ -549,10 +555,26 @@ a{
 display: block;
 }
 
-header#back{
-    background-image: none;
+header#back {
+   background-image: none;
 }
 
 .nav-pills>li.active>a {
     background-color: black;
+}
+
+/*.flex-container{
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    align-content: center;
+    margin: auto;
+}*/
+
+nav.hide{
+    display: none;
+}
+
+html, body {
+  height: 100%;
 }

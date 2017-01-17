@@ -3,32 +3,40 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Register</h2>
-@using (Html.BeginForm())
-{
-    @Html.ValidationSummary()
-    
-     <div class="form-group">
-    @Html.LabelFor(x => x.EmailAddress)
-    @Html.TextBoxFor(x => x.EmailAddress)
+<div class="">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+            <div class="well text-center " id="move-down">
+                <h2 class="text-center register">Register</h2>
+                @using (Html.BeginForm())
+            {
+                    @Html.ValidationSummary()
+                    <div class="flex-container">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.EmailAddress)
+                            @Html.TextBoxFor(x => x.EmailAddress)
+                        </div>
+
+                        <div class="form-group text-center">
+                            @Html.LabelFor(x => x.FirstName)
+                            @Html.TextBoxFor(x => x.FirstName)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.LastName)
+                            @Html.TextBoxFor(x => x.LastName)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Password)
+                            @Html.PasswordFor(x => x.Password)
+                        </div>
+                    
+                    <input type="submit" class="btn btn-primary" value="Register" />
+                    @Html.ActionLink("Login with an existing account", "index", "Registration", null, new { @class = "btn" })
+                  </div>
+                }
+
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.FirstName)
-        @Html.TextBoxFor(x => x.FirstName)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(x => x.LastName)
-        @Html.TextBoxFor(x => x.LastName)
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(x => x.Password)
-        @Html.PasswordFor(x => x.Password)
-    </div>
-
-    <input type="submit" class="btn btn-primary" value="Register" />
-    @Html.ActionLink("Login with an existing account", "index", "Registration", null, new { @class = "btn"})
-
-}
-
+</div>

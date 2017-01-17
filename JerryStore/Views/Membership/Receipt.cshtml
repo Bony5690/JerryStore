@@ -3,19 +3,22 @@
     ViewBag.Title = "Receipt";
 }
 
-<h2>Receipt</h2>
 
-<table class="table">
-   @using (Html.BeginForm())
-   {
-        <tr>
-            <td>@Model.FirstName</td>
-            <td>@Model.LastName</td>
-            <td>@Model.PackageName</td>
-            <td>@Model.Assistant</td>
-            <td>@Model.Task</td>
-            <td>@Model.Price</td>
-        </tr>
-    }
-</table>
+<div class="container height">
+    <h2>Receipt</h2>
 
+    <table class="table">
+        @using (Html.BeginForm())
+        {
+            <tr>
+                <td>@Model.FirstName</td>
+                <td>@Model.LastName</td>
+                <td>@Model.PackageName</td>
+                <td>@Model.Assistant</td>
+                <td>@Model.Task</td>
+                <td>@Model.Price</td>
+            </tr>
+        }
+    </table>
+
+</div>

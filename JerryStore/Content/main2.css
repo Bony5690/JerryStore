@@ -13,6 +13,28 @@ section.tab-container{
   background-color: #f3f5f6;
 }
 
+
+.flex-container{
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    align-content: center;
+    margin: auto;
+}
+
+
+/*.form-title{
+    margin-top: 5px;
+}
+
+.form-group, .form-control{
+   min-width: 300px;
+}
+
+.button-width{
+    min-width: 300px;
+    margin: auto;*/
+
 p.list-group-item-text{
   margin: 0 0 12.5px;
   font-size: 20px;
@@ -24,12 +46,15 @@ header#task-picture{
   background-position: center;
 }
 
-header#Pricing{
-  background-image: url("../images/Plans and Pricing header.png");
-  padding-bottom: 150px;
-  background-position: center;
+header#Pricing {
+    background-image: url("../images/Plans and Pricing header.png");
+    padding-bottom: 150px;
+    background-position: center;
 }
 
+ h2.register{
+     color: black;
+ }
 
 h3.footer-title{
   color: white;

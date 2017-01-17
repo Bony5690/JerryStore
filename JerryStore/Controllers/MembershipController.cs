@@ -17,6 +17,7 @@ namespace JerryStore.Controllers
             public ActionResult Login()
             {
             ViewBag.HeaderId = "back";
+            ViewBag.HeaderClass = "hide";
             LoginModel model = new LoginModel();
                 return View(model);
             }
@@ -48,7 +49,9 @@ namespace JerryStore.Controllers
             // GET: Registration
             public ActionResult Registration()
             {
-                RegistrationModel model = new RegistrationModel();
+            ViewBag.HeaderId = "back";
+            ViewBag.HeaderClass = "hide";
+            RegistrationModel model = new RegistrationModel();
                 return View(model);
             }
 
@@ -99,7 +102,9 @@ namespace JerryStore.Controllers
         public ActionResult Receipt()
         {
             using (Models.CustomersEntities entities = new Models.CustomersEntities())
-            { 
+            {
+                ViewBag.HeaderId = "back";
+                ViewBag.HeaderClass = "hide";
                 ReceiptModel model = new ReceiptModel();
                 var currentCustomer = entities.Customers.Single(x => x.EmailAddress == User.Identity.Name);
                 var currentPackage = currentCustomer.CustomerPackages.First(x => x.PurchaseDate != null);
