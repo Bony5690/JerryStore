@@ -17,6 +17,9 @@ namespace JerryStore.Models
         public int Id { get; set; }
         public int CustomerID { get; set; }
         public int PackageID { get; set; }
+        public string Description { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> DueDate { get; set; }
     
         public virtual CustomerPackage CustomerPackage { get; set; }
     }

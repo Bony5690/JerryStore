@@ -151,6 +151,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Models\CartModel.cs" />
     <Compile Include="Models\ReceiptModel.cs" />
     <Compile Include="Models\webpages_Membership.cs">
@@ -353,6 +354,11 @@
     <Content Include="Views\Home\TaskIdeas.cshtml" />
     <Content Include="Views\Membership\ConfirmationSent.cshtml" />
     <Content Include="Views\Membership\Receipt.cshtml" />
+    <Content Include="Views\Tasks\Create.cshtml" />
+    <Content Include="Views\Tasks\Delete.cshtml" />
+    <Content Include="Views\Tasks\Details.cshtml" />
+    <Content Include="Views\Tasks\Edit.cshtml" />
+    <Content Include="Views\Tasks\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

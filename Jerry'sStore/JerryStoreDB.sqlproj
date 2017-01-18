@@ -66,7 +66,7 @@
     <Build Include="dbo\Tables\Customers.sql" />
     <Build Include="dbo\Tables\Packages.sql" />
     <Build Include="dbo\Tables\CustomerPackages.sql" />
-    <Build Include="dbo\Tables\CustomerTasks.sql" />
+    <Build Include="dbo\Tables\CustomerPackageTasks.sql" />
     <Build Include="dbo\Tables\webpages_UsersInRoles.sql" />
     <Build Include="dbo\Tables\webpages_Roles.sql" />
     <Build Include="dbo\Tables\webpages_OAuthMembership.sql" />

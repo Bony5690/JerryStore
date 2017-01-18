@@ -21,6 +21,9 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="PackageID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="DueDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
@@ -222,6 +225,9 @@
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
           <Property Name="PackageID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CustomerPackage" Relationship="CustomersModel.FK_CustomerPackageTasks_CustomerPackages" FromRole="CustomerPackageTask" ToRole="CustomerPackage" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="DueDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Package">
           <Key>
@@ -338,6 +344,9 @@
           <EntitySetMapping Name="CustomerPackageTasks">
             <EntityTypeMapping TypeName="CustomersModel.CustomerPackageTask">
               <MappingFragment StoreEntitySet="CustomerPackageTasks">
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="PackageID" ColumnName="PackageID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
