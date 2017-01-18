@@ -14,6 +14,8 @@ namespace JerryStore.Controllers
         // GET: Checkout
         public ActionResult Index()
         {
+            ViewBag.HeaderId = "back";
+            ViewBag.HeaderClass = "hide";
             CheckoutModel model = new CheckoutModel();
 
             string publicKey = ConfigurationManager.AppSettings["Braintree.PublicKey"];

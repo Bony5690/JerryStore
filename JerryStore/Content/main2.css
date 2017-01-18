@@ -9,6 +9,19 @@
   margin-bottom: 20px;
 }
 
+input#button{
+    margin-bottom: 20px;
+}
+
+
+span.pricing-list-v4-price{
+    font-size: 50px;
+}
+
+h2.assistant{
+    font-size: 22px;
+}
+
 section.tab-container{
   background-color: #f3f5f6;
 }
@@ -40,16 +53,22 @@ p.list-group-item-text{
   font-size: 20px;
 }
 
+h2#assistant{
+    font-size: 22px;
+}
+
 header#task-picture{
   background-image: url("../images/ToDoList.png");
   padding-bottom: 150px;
   background-position: center;
+  height: auto;
 }
 
 header#Pricing {
     background-image: url("../images/Plans and Pricing header.png");
     padding-bottom: 150px;
     background-position: center;
+    height: auto;
 }
 
  h2.register{
