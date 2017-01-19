@@ -86,12 +86,23 @@ namespace JerryStore.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CustomerID,PackageID")] CustomerPackageTask customerPackageTask)
+       
+        public ActionResult Edit(CustomerPackageTask customerPackageTask)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(customerPackageTask).State = EntityState.Modified;
-                db.SaveChanges();
+                var task = db.CustomerPackageTasks.Single(x => x.Id == customerPackageTask.Id);
+                task.Description = customerPackageTask.Description;
+                task.DueDate = customerPackageTask.DueDate;
+                task.StartDate = customerPackageTask.StartDate;
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    throw ex;
+                }
                 return RedirectToAction("Index");
             }
             //ViewBag.CustomerID = new SelectList(db.CustomerPackages, "CustomerID", "CustomerID", customerPackageTask.CustomerID);
